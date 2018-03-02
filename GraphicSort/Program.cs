@@ -15,43 +15,63 @@ namespace GraphicSort
         public static string character = "███";
         static void Main(string[] args)
         {
-            Console.SetWindowSize(125,50);
-            Console.WriteLine("GraphicSort - a cli-program to show sort algorithms");
+            Console.SetWindowSize(125, 50);
             string text = "";
-            for(int i = 0; i < line.Length; i++)
+            for (int i = 0; i < line.Length; i++)
             {
                 text = text + "░░░";
                 //Console.Write(Convert.ToString(spalten[i]) + ", ");
             }
-            for(int i = 0; i < line.Length; i++)
+            for (int i = 0; i < line.Length; i++)
             {
                 line[i] = text;
             }
-            Console.ReadLine();
-            Console.Clear();
-            Console.CursorVisible = false;
-            for(int i = 0; i<line.Length; i++)
-            {
-                SetChar(character, i*3, spalten[i]);
-            }
             PostScreen();
+            Console.WriteLine("");
+            Console.WriteLine("");
+            Console.WriteLine(" GraphicSort - a cli-program to show sort algorithms");
+            Console.WriteLine(" type in one algorithm: (B)ubbleSort, (I)nsertionSort, (S)electionSort, (St)ephSort");
+            Console.SetCursorPosition(1, Console.CursorTop);
+            string choose = Console.ReadLine();
+            Console.CursorVisible = false;
+            if (choose == "st")
+            {
+                stephsort(text);
+            }
+            else if (choose == "b")
+            {
+                bubblesort(text);
+            }
+            else if(choose == "i")
+            {
+                insertionsort(text);
+            }
+            else if(choose == "s")
+            {
+                selectionsort(text);
+            }
             Console.ReadLine();
+
+        }
+
+        /*
+         * Sort Algorithms
+         * 
+         */
+        static void stephsort(string text)
+            {
             bool solange = true;
-            while(solange == true)
+            while (solange == true)
             {
                 solange = false;
-                for (int i = 0; i < spalten.Length-1; i++)
+                for (int i = 0; i < spalten.Length - 1; i++)
                 {
-                    if(spalten[i] > spalten[i+1])
+                    if (spalten[i] > spalten[i + 1])
                     {
                         solange = true;
                         int h = spalten[i];
                         spalten[i] = spalten[i + 1];
                         spalten[i + 1] = h;
-                        for (int k = 0; k < line.Length; k++)
-                        {
-                            SetChar(character, k*3, spalten[k]);
-                        }
                         PostScreen();
                         for (int k = 0; k < line.Length; k++)
                         {
@@ -61,13 +81,82 @@ namespace GraphicSort
                     }
                 }
             }
-            Console.ReadLine();
-
         }
+        static void bubblesort(string text)
+        {
+            for(int i=0; i< spalten.Length; i++)
+            {
+                for(int j =0; j < spalten.Length -1 -i; j++)
+                {
+                    if(spalten[j] > spalten[j+1])
+                    {
+                        int h = spalten[j +1];
+                        spalten[j + 1] = spalten[j];
+                        spalten[j] = h;
+                        PostScreen();
+                        for (int k = 0; k < line.Length; k++)
+                        {
+                            line[k] = text;
+                        }
+                        Thread.Sleep(10);
+                    }
+                }
+            }
+        }
+        static void insertionsort(string text)
+        {
+            for(int i = 1; i < spalten.Length; i++)
+            {
+                int k = i;
+                    for(k = i; k > 0; k--)
+                    {
+                        if(spalten[k] < spalten[k - 1])
+                        {
+                            int h = spalten[k];
+                            spalten[k] = spalten[k - 1];
+                            spalten[k - 1] = h;
+                            PostScreen();
+                            for (int j = 0; j < line.Length; j++)
+                            {
+                                line[j] = text;
+                            }
+                            Thread.Sleep(10);
+                        }
+                    }
+            }
+        }
+        static void selectionsort(string text)
+        {
+            for(int i = 0; i < spalten.Length-2; i++)
+            {
+                int max = i;
+                for(int j = 1; j < spalten.Length -1 -i; j++)
+                {
+                    if(spalten[j] > spalten[max])
+                    {
+                        max = j;
+                    }
+                }
+                int h = spalten[max];
+                spalten[max] = spalten[spalten.Length - 1 - i];
+                spalten[spalten.Length - 1 - i] = h;
+                PostScreen();
+                for (int j = 0; j < line.Length; j++)
+                {
+                    line[j] = text;
+                }
+                Thread.Sleep(10);
+            }
+        }
+
+
+        /*
+         * Graphical Stuff
+         * 
+         */
+
         static bool SetChar(string letter, int x, int groeße)
         {
-            /*string text1 = line[y].Substring(0,x);
-            string text2 = line[y].Substring(x+1,line[y].Length-x-1);*/
             for(int i = line.Length - groeße-1; i< line.Length; i++)
             {
                 line[i] = line[i].Substring(0, x) + letter + line[i].Substring(x + 3, line[i].Length - x -3);
@@ -76,6 +165,10 @@ namespace GraphicSort
         }
         static bool PostScreen()
         {
+            for (int i = 0; i < line.Length; i++)
+            {
+                SetChar(character, i * 3, spalten[i]);
+            }
             Console.SetCursorPosition(0,1);
             for (int i = 0; i < line.Length; i++)
             {
