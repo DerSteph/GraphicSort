@@ -10,34 +10,29 @@ namespace GraphicSort
     class Program
     {
         public static string[] line = new string[40];
-        public static string character = "██";
+        public static Random rnd = new Random();
+        public static int[] spalten = Enumerable.Range(0, 40).OrderBy(c => rnd.Next()).ToArray();
+        public static string character = "███";
         static void Main(string[] args)
         {
-            Console.SetWindowSize(100,50);
-            Random rnd = new Random();
-            int[] spalten = Enumerable.Range(0, 40).OrderBy(c => rnd.Next()).ToArray();
-            //int[] spalten = new int[20];
+            Console.SetWindowSize(125,50);
+            Console.WriteLine("GraphicSort - a cli-program to show sort algorithms");
             string text = "";
             for(int i = 0; i < line.Length; i++)
             {
-                text = text + "..";
+                text = text + "░░░";
+                //Console.Write(Convert.ToString(spalten[i]) + ", ");
             }
-            for (int i = 0; i<line.Length; i++)
+            for(int i = 0; i < line.Length; i++)
             {
                 line[i] = text;
             }
-            for (int i = 0; i < spalten.Length; i++)
-            {
-                Console.Write(Convert.ToString(spalten[i])+ ", ");
-            }
-            Console.WriteLine();
             Console.ReadLine();
             Console.Clear();
-            PostScreen();
-            Console.ReadLine();
+            Console.CursorVisible = false;
             for(int i = 0; i<line.Length; i++)
             {
-                SetChar(character, i*2, spalten[i]);
+                SetChar(character, i*3, spalten[i]);
             }
             PostScreen();
             Console.ReadLine();
@@ -55,7 +50,7 @@ namespace GraphicSort
                         spalten[i + 1] = h;
                         for (int k = 0; k < line.Length; k++)
                         {
-                            SetChar(character, k*2, spalten[k]);
+                            SetChar(character, k*3, spalten[k]);
                         }
                         PostScreen();
                         for (int k = 0; k < line.Length; k++)
@@ -66,10 +61,6 @@ namespace GraphicSort
                     }
                 }
             }
-            for (int i = 0; i < spalten.Length; i++)
-            {
-                Console.Write(Convert.ToString(spalten[i])+ ", ");
-            }
             Console.ReadLine();
 
         }
@@ -79,16 +70,28 @@ namespace GraphicSort
             string text2 = line[y].Substring(x+1,line[y].Length-x-1);*/
             for(int i = line.Length - groeße-1; i< line.Length; i++)
             {
-                line[i] = line[i].Substring(0, x) + letter + line[i].Substring(x + 2, line[i].Length - x -2);
+                line[i] = line[i].Substring(0, x) + letter + line[i].Substring(x + 3, line[i].Length - x -3);
             }
             return true;
         }
         static bool PostScreen()
         {
-            Console.SetCursorPosition(0,0);
+            Console.SetCursorPosition(0,1);
             for (int i = 0; i < line.Length; i++)
             {
-                Console.WriteLine(line[i]);
+                Console.WriteLine(" " + line[i]);
+            }
+            Console.Write(" ");
+            for (int k = 0; k < spalten.Length; k++)
+            {
+                if (spalten[k] < 10)
+                {
+                    Console.Write("0" + Convert.ToString(spalten[k]) + " ");
+                }
+                else
+                {
+                    Console.Write(Convert.ToString(spalten[k]) + " ");
+                }
             }
             return true;
         }
