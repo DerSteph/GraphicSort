@@ -31,24 +31,64 @@ namespace GraphicSort
             CreateScreen();
             PostScreen();
             Console.WriteLine("    GraphicSort - a cli-program to show sort algorithms");
-            Console.WriteLine("    type in one algorithm: (B)ubbleSort, (I)nsertionSort, (S)electionSort, (St)ephSort");
+            Console.WriteLine("    choose with arrow-up and arrow-down the algorithm:");
+            string[] algorithms = new string[4] {
+                "BubbleSort",
+                "InsertionSort",
+                "SelectionSort",
+                "StephSort"
+            };
             Console.SetCursorPosition(4, Console.CursorTop);
             Console.Write("> ");
-            string choose = Console.ReadLine();
-            Console.CursorVisible = false;
-            switch(choose)
+            Console.Write("BubbleSort");
+            int algo_choose = 0;
+            while(true)
             {
-                case "st":
-                    stephsort();
+                var ch = Console.ReadKey(false).Key;
+                if (ch == ConsoleKey.UpArrow)
+                {
+                    if(algo_choose != 0)
+                    {
+                        algo_choose--;
+                    }
+                    else
+                    {
+                        algo_choose = algorithms.Length - 1;
+                    }
+                }
+                else if (ch == ConsoleKey.DownArrow)
+                {
+                    if(algo_choose == algorithms.Length -1)
+                    {
+                        algo_choose = 0;
+                    }
+                    else
+                    {
+                        algo_choose++;
+                    }
+                }
+                else if (ch == ConsoleKey.Enter)
+                {
                     break;
-                case "b":
+                }
+                Console.SetCursorPosition(6, Console.CursorTop);
+                Console.Write(algorithms[algo_choose] + "     ");
+                Console.SetCursorPosition(6, Console.CursorTop);
+            }
+            Console.CursorVisible = false;
+            switch(algo_choose)
+            {
+                case 0:
                     bubblesort();
                     break;
-                case "i":
+                case 1:
                     insertionsort();
                     break;
-                case "s":
+                case 2:
                     selectionsort();
+                    break;
+                case 3:
+                    stephsort();
                     break;
                 default:
                     break;
