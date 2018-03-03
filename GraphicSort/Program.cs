@@ -28,10 +28,31 @@ namespace GraphicSort
             CreateScreen();
             PostScreen();
             CreateWindow();
+            Console.SetCursorPosition(2 + 15 + 2 +15, 2 + 12 + 1);
+            Console.Write(" _____                 _     _      _____            _   ");
+            Console.SetCursorPosition(2 + 15 + 2 +15, 2 + 12 + 2);
+            Console.Write("|  __ \\               | |   (_)    /  ___|          | |  ");
+            Console.SetCursorPosition(2 + 15 + 2 +15, 2 + 12 + 3);
+            Console.Write("| |  \\/_ __ __ _ _ __ | |__  _  ___\\ `--.  ___  _ __| |_ ");
+            Console.SetCursorPosition(2 + 15 + 2 +15, 2 + 12 + 4);
+            Console.Write("| | __| '__/ _` | '_ \\| '_ \\| |/ __|`--. \\/ _ \\| '__| __|");
+            Console.SetCursorPosition(2 + 15 + 2 + 15, 2 + 12 + 5);
+            Console.Write("| |_\\ \\ | | (_| | |_) | | | | | (__/\\__/ / (_) | |  | |_ ");
+            Console.SetCursorPosition(2 + 15 + 2 +15, 2 + 12 + 6);
+            Console.Write(" \\____/_|  \\__,_| .__/|_| |_|_|\\___\\____/ \\___/|_|   \\__|");
+            Console.SetCursorPosition(2 + 15 + 2 +15, 2 + 12 + 7);
+            Console.Write("                | |                                      ");
+            Console.SetCursorPosition(2 + 15 + 2 + 15, 2 + 12 + 8);
+            Console.Write("                |_|                                      ");
+            Console.SetCursorPosition(2 + 15 + 2 + 20, 2 + 12 + 10);
+            Console.Write("choose with arrow-up and arrow-down the algorithm");
+            //Console.ReadLine();
+            //ResetWindow();
+
             int choose = 0;
             while(true)
             {
-                Console.SetCursorPosition(2 + 15 + 2, 2 + 12 + 5);
+                Console.SetCursorPosition(2 + 15 + 38, 2 + 12 + 5+7);
                 Console.ForegroundColor = ConsoleColor.DarkGray;
                 if (choose - 1 == -1)
                 {
@@ -41,11 +62,11 @@ namespace GraphicSort
                 {
                     Console.Write("  " + algorithms[choose - 1] + "     ");
                 }
-                Console.SetCursorPosition(2 + 15 + 2, 2 + 12 + 5 + 1);
+                Console.SetCursorPosition(2 + 15 + 38, 2 + 12 + 5 + 1+7);
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.Write("> " + algorithms[choose] + "     ");
                 Console.ForegroundColor = ConsoleColor.DarkGray;
-                Console.SetCursorPosition(2 + 15 + 2, 2 + 12 + 5 + 2);
+                Console.SetCursorPosition(2 + 15 + 38, 2 + 12 + 5 + 2+7);
                 if (choose + 1 == algorithms.Length)
                 {
                     Console.Write("  " + algorithms[0] + "     ");
@@ -54,7 +75,6 @@ namespace GraphicSort
                 {
                     Console.Write("  " + algorithms[choose + 1] + "     ");
                 }
-                Console.SetCursorPosition(2 + 15 + 2 + 2, 2 + 12 + 5 + 1);
                 var ch = Console.ReadKey(false).Key;
                 if (ch == ConsoleKey.UpArrow)
                 {
@@ -271,10 +291,20 @@ namespace GraphicSort
             Console.SetCursorPosition(2+15+90, 2+12+15);
             Console.Write("╝");
             Console.CursorVisible = false;
-            Console.SetCursorPosition(2 + 15 + 2, 2 + 12 + 2);
-            Console.Write("GraphicSort - a cli-program to show sort algorithms\n");
-            Console.SetCursorPosition(2 + 15 + 2, 2 + 12 + 3);
-            Console.Write("choose with arrow-up and arrow-down the algorithm:");
+        }
+
+        static void ResetWindow()
+        {
+            string background_window = "";
+            for (int i = 0; i < 88; i++)
+            {
+                background_window = background_window + " ";
+            }
+            for (int i = 0; i < 14; i++)
+            {
+                Console.SetCursorPosition(2 + 16, 2 + 13 + i);
+                Console.Write(background_window);
+            }
         }
 
         static bool SetChar(string letter, int x, int groeße)
