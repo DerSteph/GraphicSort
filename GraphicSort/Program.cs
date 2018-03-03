@@ -30,26 +30,13 @@ namespace GraphicSort
             }
             CreateScreen();
             PostScreen();
-            string[] algorithms = new string[4] {
+            string[] algorithms = new string[] {
                 "BubbleSort",
                 "InsertionSort",
                 "SelectionSort",
                 "StephSort"
             };
-            string background_window = "";
-            for(int i = 0; i < 30; i++)
-            {
-                background_window = background_window + "   ";
-            }
-            for(int i  = 0; i < 16; i++)
-            {
-                Console.SetCursorPosition(2+15,2+12+i);
-                Console.Write(background_window);
-            }
-            Console.SetCursorPosition(2+15+2,2+12+2);
-            Console.Write("GraphicSort - a cli-program to show sort algorithms\n");
-            Console.SetCursorPosition(2 + 15 + 2, 2 + 12 + 3);
-            Console.Write("choose with arrow-up and arrow-down the algorithm:");
+            CreateWindow();
             int choose = 0;
             while(true)
             {
@@ -105,7 +92,6 @@ namespace GraphicSort
                     break;
                 }
             }
-            Console.CursorVisible = false;
             Console.SetCursorPosition(4, 45);
             Console.ResetColor();
             Console.WriteLine("algorithm: " + algorithms[choose]);
@@ -228,34 +214,70 @@ namespace GraphicSort
             Console.SetCursorPosition(2, 1);
             for (int i = 0; i < 120; i++)
             {
+                Console.SetCursorPosition(2+i, 1);
+                Console.Write("═");
+                Console.SetCursorPosition(2+i,43);
                 Console.Write("═");
             }
             Console.SetCursorPosition(1, 1);
             Console.Write("╔");
             Console.SetCursorPosition(122, 1);
             Console.Write("╗");
-            for(int i = 0; i < line.Length; i++)
+            for(int i = 0; i < line.Length+1; i++)
             {
                 Console.SetCursorPosition(1, 2+i);
                 Console.Write("║");
                 Console.SetCursorPosition(122, 2+i);
                 Console.Write("║");
             }
-            Console.SetCursorPosition(2, 43);
-            for (int i = 0; i < 120; i++)
-            {
-                Console.Write("═");
-            }
-            Console.SetCursorPosition(1, 42);
-            Console.Write("║");
-            Console.SetCursorPosition(122, 42);
-            Console.Write("║");
             Console.SetCursorPosition(1, 43);
             Console.Write("╚");
             Console.SetCursorPosition(122, 43);
             Console.Write("╝");
             Console.WriteLine();
         }
+
+        static void CreateWindow()
+        {
+            string background_window = "";
+            for (int i = 0; i < 30; i++)
+            {
+                background_window = background_window + "   ";
+            }
+            for (int i = 0; i < 16; i++)
+            {
+                Console.SetCursorPosition(2 + 15, 2 + 12 + i);
+                Console.Write(background_window);
+            }
+            for (int i = 0; i < 90; i++)
+            {
+                Console.SetCursorPosition(2 + 15+i,2+12);
+                Console.Write("═");
+                Console.SetCursorPosition(2 + 15 + i, 2 + 12+15);
+                Console.Write("═");
+            }
+            for (int i = 0; i < 16; i++)
+            {
+                Console.SetCursorPosition(2 + 15, 2 + 12 + i);
+                Console.Write("║");
+                Console.SetCursorPosition(2 + 15 + 90, 2 + 12 + i);
+                Console.Write("║");
+            }
+            Console.SetCursorPosition(2+15, 2+12);
+            Console.Write("╔");
+            Console.SetCursorPosition(2+15+90, 2+12);
+            Console.Write("╗");
+            Console.SetCursorPosition(2+15, 2+12+15);
+            Console.Write("╚");
+            Console.SetCursorPosition(2+15+90, 2+12+15);
+            Console.Write("╝");
+            Console.CursorVisible = false;
+            Console.SetCursorPosition(2 + 15 + 2, 2 + 12 + 2);
+            Console.Write("GraphicSort - a cli-program to show sort algorithms\n");
+            Console.SetCursorPosition(2 + 15 + 2, 2 + 12 + 3);
+            Console.Write("choose with arrow-up and arrow-down the algorithm:");
+        }
+
         static bool SetChar(string letter, int x, int groeße)
         {
             for(int i = line.Length - groeße-1; i< line.Length; i++)
