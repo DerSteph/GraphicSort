@@ -19,7 +19,7 @@ namespace GraphicSort
         public static int comparison = 0;
         static void Main(string[] args)
         {
-            Console.SetWindowSize(125, 50);
+            Console.SetWindowSize(124, 50);
             for (int i = 0; i < line.Length; i++)
             {
                 text = text + background;
@@ -77,9 +77,8 @@ namespace GraphicSort
                         int h = spalten[i];
                         spalten[i] = spalten[i + 1];
                         spalten[i + 1] = h;
-                        Console.Beep(5000 + 50 * spalten[i], 30);
+                        Console.Beep(5000 + 50 * spalten[i], 20);
                         PostScreen();
-                        Thread.Sleep(10);
                     }
                 }
             }
@@ -97,9 +96,8 @@ namespace GraphicSort
                         spalten[j + 1] = spalten[j];
                         spalten[j] = h;
                         swap = swap + 1;
-                        Console.Beep(5000 + 50 * spalten[j], 30);
+                        Console.Beep(5000 + 50 * spalten[j], 20);
                         PostScreen();
-                        Thread.Sleep(10);
                     }
                 }
             }
@@ -118,9 +116,8 @@ namespace GraphicSort
                         int h = spalten[k];
                         spalten[k] = spalten[k - 1];
                         spalten[k - 1] = h;
-                        Console.Beep(5000 + 50 * spalten[k], 30);
+                        Console.Beep(5000 + 50 * spalten[k], 20);
                         PostScreen();
-                        Thread.Sleep(10);
                         }
                     }
             }
@@ -142,9 +139,8 @@ namespace GraphicSort
                 int h = spalten[min];
                 spalten[min] = spalten[i];
                 spalten[i] = h;
-                Console.Beep(5000 + 50 * spalten[i], 30);
+                Console.Beep(5000 + 50 * spalten[i], 20);
                 PostScreen();
-                Thread.Sleep(10);
             }
         }
 
