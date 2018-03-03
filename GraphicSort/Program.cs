@@ -15,6 +15,8 @@ namespace GraphicSort
         public static string character = "███";
         public static string background = "░░░";
         public static string text = "";
+        public static int swap = 0;
+        public static int comparison = 0;
         static void Main(string[] args)
         {
             Console.SetWindowSize(125, 50);
@@ -27,14 +29,11 @@ namespace GraphicSort
                 line[i] = text;
             }
             PostScreen();
-            Console.WriteLine("");
-            Console.WriteLine("");
             Console.WriteLine(" GraphicSort - a cli-program to show sort algorithms");
             Console.WriteLine(" type in one algorithm: (B)ubbleSort, (I)nsertionSort, (S)electionSort, (St)ephSort");
             Console.SetCursorPosition(1, Console.CursorTop);
-            string choose = Console.ReadLine();
             Console.CursorVisible = false;
-            switch(choose)
+            switch(Console.ReadLine())
             {
                 case "st":
                     stephsort();
@@ -67,9 +66,11 @@ namespace GraphicSort
                 solange = false;
                 for (int i = 0; i < spalten.Length - 1; i++)
                 {
+                    comparison = comparison + 1;
                     if (spalten[i] > spalten[i + 1])
                     {
                         solange = true;
+                        swap = swap + 1;
                         int h = spalten[i];
                         spalten[i] = spalten[i + 1];
                         spalten[i + 1] = h;
@@ -86,11 +87,13 @@ namespace GraphicSort
             {
                 for(int j =0; j < spalten.Length -1 -i; j++)
                 {
-                    if(spalten[j] > spalten[j+1])
+                    comparison = comparison + 1;
+                    if (spalten[j] > spalten[j+1])
                     {
                         int h = spalten[j +1];
                         spalten[j + 1] = spalten[j];
                         spalten[j] = h;
+                        swap = swap + 1;
                         Console.Beep(5000 + 50 * spalten[j], 30);
                         PostScreen();
                         Thread.Sleep(10);
@@ -105,8 +108,10 @@ namespace GraphicSort
                 int k = i;
                 for(k = i; k > 0; k--)
                 {
-                    if(spalten[k] < spalten[k - 1])
+                    comparison = comparison + 1;
+                    if (spalten[k] < spalten[k - 1])
                     {
+                        swap = swap + 1;
                         int h = spalten[k];
                         spalten[k] = spalten[k - 1];
                         spalten[k - 1] = h;
@@ -124,11 +129,13 @@ namespace GraphicSort
                 int min = i;
                 for (int j = i; j < spalten.Length; j++)
                 {
+                    comparison = comparison + 1;
                     if (spalten[j] < spalten[min])
                     {
                         min = j;
                     }
                 }
+                swap = swap + 1;
                 int h = spalten[min];
                 spalten[min] = spalten[i];
                 spalten[i] = h;
@@ -148,7 +155,7 @@ namespace GraphicSort
         {
             for(int i = line.Length - groeße-1; i< line.Length; i++)
             {
-                line[i] = line[i].Substring(0, x) + letter + line[i].Substring(x + 3, line[i].Length - x -3);
+                line[i] = line[i].Substring(0, x) + letter + line[i].Substring(x + 3, line[i].Length - x - 3);
             }
             return true;
         }
@@ -167,6 +174,8 @@ namespace GraphicSort
                 Console.WriteLine(" " + line[i]);
             }
             Console.Write(" ");
+
+            // write the numbers
             for (int k = 0; k < spalten.Length; k++)
             {
                 if (spalten[k] < 10)
@@ -178,10 +187,17 @@ namespace GraphicSort
                     Console.Write(Convert.ToString(spalten[k]) + " ");
                 }
             }
+
+            // reset the graphical output
             for (int j = 0; j < line.Length; j++)
             {
                 line[j] = text;
             }
+            Console.SetCursorPosition(100, 43);
+            Console.Write("comparisons: " + comparison);
+            Console.SetCursorPosition(100, 44);
+            Console.Write("      swaps: " + swap);
+            Console.SetCursorPosition(0, 43);
             return true;
         }
     }
