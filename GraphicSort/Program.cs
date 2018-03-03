@@ -28,12 +28,15 @@ namespace GraphicSort
             {
                 line[i] = text;
             }
+            CreateScreen();
             PostScreen();
-            Console.WriteLine(" GraphicSort - a cli-program to show sort algorithms");
-            Console.WriteLine(" type in one algorithm: (B)ubbleSort, (I)nsertionSort, (S)electionSort, (St)ephSort");
-            Console.SetCursorPosition(1, Console.CursorTop);
+            Console.WriteLine("    GraphicSort - a cli-program to show sort algorithms");
+            Console.WriteLine("    type in one algorithm: (B)ubbleSort, (I)nsertionSort, (S)electionSort, (St)ephSort");
+            Console.SetCursorPosition(4, Console.CursorTop);
+            Console.Write("> ");
+            string choose = Console.ReadLine();
             Console.CursorVisible = false;
-            switch(Console.ReadLine())
+            switch(choose)
             {
                 case "st":
                     stephsort();
@@ -151,6 +154,39 @@ namespace GraphicSort
          * 
          */
 
+        static void CreateScreen()
+        {
+            Console.SetCursorPosition(2, 1);
+            for (int i = 0; i < 120; i++)
+            {
+                Console.Write("═");
+            }
+            Console.SetCursorPosition(1, 1);
+            Console.Write("╔");
+            Console.SetCursorPosition(122, 1);
+            Console.Write("╗");
+            for(int i = 0; i < line.Length; i++)
+            {
+                Console.SetCursorPosition(1, 2+i);
+                Console.Write("║");
+                Console.SetCursorPosition(122, 2+i);
+                Console.Write("║");
+            }
+            Console.SetCursorPosition(2, 43);
+            for (int i = 0; i < 120; i++)
+            {
+                Console.Write("═");
+            }
+            Console.SetCursorPosition(1, 42);
+            Console.Write("║");
+            Console.SetCursorPosition(122, 42);
+            Console.Write("║");
+            Console.SetCursorPosition(1, 43);
+            Console.Write("╚");
+            Console.SetCursorPosition(122, 43);
+            Console.Write("╝");
+            Console.WriteLine();
+        }
         static bool SetChar(string letter, int x, int groeße)
         {
             for(int i = line.Length - groeße-1; i< line.Length; i++)
@@ -166,23 +202,14 @@ namespace GraphicSort
             {
                 SetChar(character, i * 3, spalten[i]);
             }
-            Console.SetCursorPosition(1, 0);
-            for (int i = 0; i < 120; i++)
-            {
-                Console.Write("═");
-            }
-            Console.SetCursorPosition(0,0);
-            Console.Write("╔");
-            Console.SetCursorPosition(121, 0);
-            Console.Write("╗");
-            Console.SetCursorPosition(0,1);
 
             // graphical Output
             for (int i = 0; i < line.Length; i++)
             {
-                Console.WriteLine("║" + line[i] + "║");
+                Console.SetCursorPosition(2, 2+i);
+                Console.Write(line[i]);
             }
-            Console.SetCursorPosition(1,41);
+            Console.SetCursorPosition(2,42);
             for (int k = 0; k < spalten.Length; k++)
             {
                 if (spalten[k] < 10)
@@ -194,20 +221,6 @@ namespace GraphicSort
                     Console.Write(Convert.ToString(spalten[k]) + " ");
                 }
             }
-            Console.SetCursorPosition(1,42);
-            for (int i = 0; i < 120; i++)
-            {
-                Console.Write("═");
-            }
-            Console.SetCursorPosition(0,41);
-            Console.Write("║");
-            Console.SetCursorPosition(121, 41);
-            Console.Write("║");
-            Console.SetCursorPosition(0,42);
-            Console.Write("╚");
-            Console.SetCursorPosition(121,42);
-            Console.Write("╝");
-            Console.WriteLine();
             // write the numbers
 
             // reset the graphical output
@@ -215,11 +228,11 @@ namespace GraphicSort
             {
                 line[j] = text;
             }
-            Console.SetCursorPosition(100, 43);
+            Console.SetCursorPosition(101, 45);
             Console.Write("comparisons: " + comparison);
-            Console.SetCursorPosition(100, 44);
+            Console.SetCursorPosition(101, 46);
             Console.Write("      swaps: " + swap);
-            Console.SetCursorPosition(0, 43);
+            Console.SetCursorPosition(0, 45);
             return true;
         }
     }
