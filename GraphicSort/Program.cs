@@ -13,10 +13,10 @@ namespace GraphicSort
         public static Random rnd = new Random();
         public static int[] spalten = Enumerable.Range(0, 40).OrderBy(c => rnd.Next()).ToArray();
         public static string character = "███";
+        public static string text = "";
         static void Main(string[] args)
         {
             Console.SetWindowSize(125, 50);
-            string text = "";
             for (int i = 0; i < line.Length; i++)
             {
                 text = text + "░░░";
@@ -73,10 +73,6 @@ namespace GraphicSort
                         spalten[i] = spalten[i + 1];
                         spalten[i + 1] = h;
                         PostScreen();
-                        for (int k = 0; k < line.Length; k++)
-                        {
-                            line[k] = text;
-                        }
                         Thread.Sleep(10);
                     }
                 }
@@ -94,10 +90,6 @@ namespace GraphicSort
                         spalten[j + 1] = spalten[j];
                         spalten[j] = h;
                         PostScreen();
-                        for (int k = 0; k < line.Length; k++)
-                        {
-                            line[k] = text;
-                        }
                         Thread.Sleep(10);
                     }
                 }
@@ -116,10 +108,6 @@ namespace GraphicSort
                             spalten[k] = spalten[k - 1];
                             spalten[k - 1] = h;
                             PostScreen();
-                            for (int j = 0; j < line.Length; j++)
-                            {
-                                line[j] = text;
-                            }
                             Thread.Sleep(10);
                         }
                     }
@@ -127,24 +115,20 @@ namespace GraphicSort
         }
         static void selectionsort(string text)
         {
-            for(int i = 0; i < spalten.Length-2; i++)
+            for (int i = 0; i < spalten.Length - 1; i++)
             {
-                int max = i;
-                for(int j = 1; j < spalten.Length -1 -i; j++)
+                int min = i;
+                for (int j = i; j < spalten.Length; j++)
                 {
-                    if(spalten[j] > spalten[max])
+                    if (spalten[j] < spalten[min])
                     {
-                        max = j;
+                        min = j;
                     }
                 }
-                int h = spalten[max];
-                spalten[max] = spalten[spalten.Length - 1 - i];
-                spalten[spalten.Length - 1 - i] = h;
+                int h = spalten[min];
+                spalten[min] = spalten[i];
+                spalten[i] = h;
                 PostScreen();
-                for (int j = 0; j < line.Length; j++)
-                {
-                    line[j] = text;
-                }
                 Thread.Sleep(10);
             }
         }
@@ -185,6 +169,10 @@ namespace GraphicSort
                 {
                     Console.Write(Convert.ToString(spalten[k]) + " ");
                 }
+            }
+            for (int j = 0; j < line.Length; j++)
+            {
+                line[j] = text;
             }
             return true;
         }
