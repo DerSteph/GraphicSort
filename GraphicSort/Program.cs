@@ -30,53 +30,86 @@ namespace GraphicSort
             }
             CreateScreen();
             PostScreen();
-            Console.WriteLine("    GraphicSort - a cli-program to show sort algorithms");
-            Console.WriteLine("    choose with arrow-up and arrow-down the algorithm:");
             string[] algorithms = new string[4] {
                 "BubbleSort",
                 "InsertionSort",
                 "SelectionSort",
                 "StephSort"
             };
-            Console.SetCursorPosition(4, Console.CursorTop);
-            Console.Write("> ");
-            Console.Write("BubbleSort");
-            int algo_choose = 0;
+            string background_window = "";
+            for(int i = 0; i < 30; i++)
+            {
+                background_window = background_window + "   ";
+            }
+            for(int i  = 0; i < 16; i++)
+            {
+                Console.SetCursorPosition(2+15,2+12+i);
+                Console.Write(background_window);
+            }
+            Console.SetCursorPosition(2+15+2,2+12+2);
+            Console.Write("GraphicSort - a cli-program to show sort algorithms\n");
+            Console.SetCursorPosition(2 + 15 + 2, 2 + 12 + 3);
+            Console.Write("choose with arrow-up and arrow-down the algorithm:");
+            int choose = 0;
             while(true)
             {
+                Console.SetCursorPosition(2 + 15 + 2, 2 + 12 + 5);
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+                if (choose - 1 == -1)
+                {
+                    Console.Write("  " + algorithms[algorithms.Length - 1] + "     ");
+                }
+                else
+                {
+                    Console.Write("  " + algorithms[choose - 1] + "     ");
+                }
+                Console.SetCursorPosition(2 + 15 + 2, 2 + 12 + 5 + 1);
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write("> " + algorithms[choose] + "     ");
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+                Console.SetCursorPosition(2 + 15 + 2, 2 + 12 + 5 + 2);
+                if (choose + 1 == algorithms.Length)
+                {
+                    Console.Write("  " + algorithms[0] + "     ");
+                }
+                else
+                {
+                    Console.Write("  " + algorithms[choose + 1] + "     ");
+                }
+                Console.SetCursorPosition(2 + 15 + 2 + 2, 2 + 12 + 5 + 1);
                 var ch = Console.ReadKey(false).Key;
                 if (ch == ConsoleKey.UpArrow)
                 {
-                    if(algo_choose != 0)
+                    if(choose != 0)
                     {
-                        algo_choose--;
+                        choose--;
                     }
                     else
                     {
-                        algo_choose = algorithms.Length - 1;
+                        choose = algorithms.Length - 1;
                     }
                 }
                 else if (ch == ConsoleKey.DownArrow)
                 {
-                    if(algo_choose == algorithms.Length -1)
+                    if(choose == algorithms.Length -1)
                     {
-                        algo_choose = 0;
+                        choose = 0;
                     }
                     else
                     {
-                        algo_choose++;
+                        choose++;
                     }
                 }
                 else if (ch == ConsoleKey.Enter)
                 {
                     break;
                 }
-                Console.SetCursorPosition(6, Console.CursorTop);
-                Console.Write(algorithms[algo_choose] + "     ");
-                Console.SetCursorPosition(6, Console.CursorTop);
             }
             Console.CursorVisible = false;
-            switch(algo_choose)
+            Console.SetCursorPosition(4, 45);
+            Console.ResetColor();
+            Console.WriteLine("algorithm: " + algorithms[choose]);
+            switch(choose)
             {
                 case 0:
                     bubblesort();
