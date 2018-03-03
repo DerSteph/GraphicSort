@@ -13,14 +13,14 @@ namespace GraphicSort
         public static Random rnd = new Random();
         public static int[] spalten = Enumerable.Range(0, 40).OrderBy(c => rnd.Next()).ToArray();
         public static string character = "███";
+        public static string background = "░░░";
         public static string text = "";
         static void Main(string[] args)
         {
             Console.SetWindowSize(125, 50);
             for (int i = 0; i < line.Length; i++)
             {
-                text = text + "░░░";
-                //Console.Write(Convert.ToString(spalten[i]) + ", ");
+                text = text + background;
             }
             for (int i = 0; i < line.Length; i++)
             {
@@ -34,21 +34,22 @@ namespace GraphicSort
             Console.SetCursorPosition(1, Console.CursorTop);
             string choose = Console.ReadLine();
             Console.CursorVisible = false;
-            if (choose == "st")
+            switch(choose)
             {
-                stephsort(text);
-            }
-            else if (choose == "b")
-            {
-                bubblesort(text);
-            }
-            else if(choose == "i")
-            {
-                insertionsort(text);
-            }
-            else if(choose == "s")
-            {
-                selectionsort(text);
+                case "st":
+                    stephsort();
+                    break;
+                case "b":
+                    bubblesort();
+                    break;
+                case "i":
+                    insertionsort();
+                    break;
+                case "s":
+                    selectionsort();
+                    break;
+                default:
+                    break;
             }
             Console.ReadLine();
 
@@ -58,7 +59,7 @@ namespace GraphicSort
          * Sort Algorithms
          * 
          */
-        static void stephsort(string text)
+        protected static void stephsort()
             {
             bool solange = true;
             while (solange == true)
@@ -72,13 +73,14 @@ namespace GraphicSort
                         int h = spalten[i];
                         spalten[i] = spalten[i + 1];
                         spalten[i + 1] = h;
+                        Console.Beep(5000 + 50 * spalten[i], 30);
                         PostScreen();
                         Thread.Sleep(10);
                     }
                 }
             }
         }
-        static void bubblesort(string text)
+        protected static void bubblesort()
         {
             for(int i=0; i< spalten.Length; i++)
             {
@@ -89,31 +91,33 @@ namespace GraphicSort
                         int h = spalten[j +1];
                         spalten[j + 1] = spalten[j];
                         spalten[j] = h;
+                        Console.Beep(5000 + 50 * spalten[j], 30);
                         PostScreen();
                         Thread.Sleep(10);
                     }
                 }
             }
         }
-        static void insertionsort(string text)
+        protected static void insertionsort()
         {
             for(int i = 1; i < spalten.Length; i++)
             {
                 int k = i;
-                    for(k = i; k > 0; k--)
+                for(k = i; k > 0; k--)
+                {
+                    if(spalten[k] < spalten[k - 1])
                     {
-                        if(spalten[k] < spalten[k - 1])
-                        {
-                            int h = spalten[k];
-                            spalten[k] = spalten[k - 1];
-                            spalten[k - 1] = h;
-                            PostScreen();
-                            Thread.Sleep(10);
+                        int h = spalten[k];
+                        spalten[k] = spalten[k - 1];
+                        spalten[k - 1] = h;
+                        Console.Beep(5000 + 50 * spalten[k], 30);
+                        PostScreen();
+                        Thread.Sleep(10);
                         }
                     }
             }
         }
-        static void selectionsort(string text)
+        protected static void selectionsort()
         {
             for (int i = 0; i < spalten.Length - 1; i++)
             {
@@ -128,6 +132,7 @@ namespace GraphicSort
                 int h = spalten[min];
                 spalten[min] = spalten[i];
                 spalten[i] = h;
+                Console.Beep(5000 + 50 * spalten[i], 30);
                 PostScreen();
                 Thread.Sleep(10);
             }
@@ -149,11 +154,14 @@ namespace GraphicSort
         }
         static bool PostScreen()
         {
+            // set the new positions in the lines
             for (int i = 0; i < line.Length; i++)
             {
                 SetChar(character, i * 3, spalten[i]);
             }
             Console.SetCursorPosition(0,1);
+
+            // graphical Output
             for (int i = 0; i < line.Length; i++)
             {
                 Console.WriteLine(" " + line[i]);
