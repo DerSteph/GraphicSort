@@ -166,16 +166,23 @@ namespace GraphicSort
             {
                 SetChar(character, i * 3, spalten[i]);
             }
+            Console.SetCursorPosition(1, 0);
+            for (int i = 0; i < 120; i++)
+            {
+                Console.Write("═");
+            }
+            Console.SetCursorPosition(0,0);
+            Console.Write("╔");
+            Console.SetCursorPosition(121, 0);
+            Console.Write("╗");
             Console.SetCursorPosition(0,1);
 
             // graphical Output
             for (int i = 0; i < line.Length; i++)
             {
-                Console.WriteLine(" " + line[i]);
+                Console.WriteLine("║" + line[i] + "║");
             }
-            Console.Write(" ");
-
-            // write the numbers
+            Console.SetCursorPosition(1,41);
             for (int k = 0; k < spalten.Length; k++)
             {
                 if (spalten[k] < 10)
@@ -187,6 +194,21 @@ namespace GraphicSort
                     Console.Write(Convert.ToString(spalten[k]) + " ");
                 }
             }
+            Console.SetCursorPosition(1,42);
+            for (int i = 0; i < 120; i++)
+            {
+                Console.Write("═");
+            }
+            Console.SetCursorPosition(0,41);
+            Console.Write("║");
+            Console.SetCursorPosition(121, 41);
+            Console.Write("║");
+            Console.SetCursorPosition(0,42);
+            Console.Write("╚");
+            Console.SetCursorPosition(121,42);
+            Console.Write("╝");
+            Console.WriteLine();
+            // write the numbers
 
             // reset the graphical output
             for (int j = 0; j < line.Length; j++)
