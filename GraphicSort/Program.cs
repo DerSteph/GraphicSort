@@ -19,23 +19,14 @@ namespace GraphicSort
         public static int comparison = 0;
         static void Main(string[] args)
         {
-            Console.SetWindowSize(124, 50);
-            for (int i = 0; i < line.Length; i++)
-            {
-                text = text + background;
-            }
-            for (int i = 0; i < line.Length; i++)
-            {
-                line[i] = text;
-            }
-            CreateScreen();
-            PostScreen();
             string[] algorithms = new string[] {
                 "BubbleSort",
                 "InsertionSort",
                 "SelectionSort",
                 "StephSort"
             };
+            CreateScreen();
+            PostScreen();
             CreateWindow();
             int choose = 0;
             while(true)
@@ -211,6 +202,15 @@ namespace GraphicSort
 
         static void CreateScreen()
         {
+            Console.SetWindowSize(124, 50);
+            for (int i = 0; i < line.Length; i++)
+            {
+                text = text + background;
+            }
+            for (int i = 0; i < line.Length; i++)
+            {
+                line[i] = text;
+            }
             Console.SetCursorPosition(2, 1);
             for (int i = 0; i < 120; i++)
             {
