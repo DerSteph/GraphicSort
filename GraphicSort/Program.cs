@@ -20,6 +20,7 @@ namespace GraphicSort
         static void Main(string[] args)
         {
             Console.SetWindowSize(124, 50);
+            Console.Title = "GraphicSort";
             CreateScreen();
             while (true)
             {
@@ -113,6 +114,7 @@ namespace GraphicSort
                 Console.SetCursorPosition(4, 45);
                 Console.ResetColor();
                 Console.WriteLine("algorithm: " + algorithms[choose]);
+                PostScreen();
                 switch (choose)
                 {
                     case 0:
@@ -131,6 +133,8 @@ namespace GraphicSort
                         break;
                 }
                 Console.ReadLine();
+                Console.SetCursorPosition(4, 45);
+                Console.WriteLine("                                     ");
             }
         }
 
@@ -146,16 +150,16 @@ namespace GraphicSort
                 solange = false;
                 for (int i = 0; i < spalten.Length - 1; i++)
                 {
-                    comparison = comparison + 1;
+                    ShowComparisons();
                     if (spalten[i] > spalten[i + 1])
                     {
                         solange = true;
-                        swap = swap + 1;
+                        ShowSwaps();
                         int h = spalten[i];
                         spalten[i] = spalten[i + 1];
                         spalten[i + 1] = h;
                         Console.Beep(5000 + 50 * spalten[i], 20);
-                        PostScreen();
+                        ChangePosition(i, i+1);
                     }
                 }
             }
@@ -166,15 +170,15 @@ namespace GraphicSort
             {
                 for (int j = 0; j < spalten.Length - 1 - i; j++)
                 {
-                    comparison = comparison + 1;
+                    ShowComparisons();
                     if (spalten[j] > spalten[j + 1])
                     {
                         int h = spalten[j + 1];
                         spalten[j + 1] = spalten[j];
                         spalten[j] = h;
-                        swap = swap + 1;
+                        ShowSwaps();
                         Console.Beep(5000 + 50 * spalten[j], 20);
-                        PostScreen();
+                        ChangePosition(j,j+1);
                     }
                 }
             }
@@ -186,15 +190,15 @@ namespace GraphicSort
                 int k = i;
                 for (k = i; k > 0; k--)
                 {
-                    comparison = comparison + 1;
+                    ShowComparisons();
                     if (spalten[k] < spalten[k - 1])
                     {
-                        swap = swap + 1;
+                        ShowSwaps();
                         int h = spalten[k];
                         spalten[k] = spalten[k - 1];
                         spalten[k - 1] = h;
                         Console.Beep(5000 + 50 * spalten[k], 20);
-                        PostScreen();
+                        ChangePosition(k, k-1);
                     }
                 }
             }
@@ -206,18 +210,18 @@ namespace GraphicSort
                 int min = i;
                 for (int j = i; j < spalten.Length; j++)
                 {
-                    comparison = comparison + 1;
+                    ShowComparisons();
                     if (spalten[j] < spalten[min])
                     {
                         min = j;
                     }
                 }
-                swap = swap + 1;
+                ShowSwaps();
                 int h = spalten[min];
                 spalten[min] = spalten[i];
                 spalten[i] = h;
                 Console.Beep(5000 + 50 * spalten[i], 20);
-                PostScreen();
+                ChangePosition(min,i);
             }
         }
 
@@ -313,50 +317,106 @@ namespace GraphicSort
                 Console.Write(background_window);
             }
         }
-
-        static bool SetChar(string letter, int x, int groeße)
-        {
-            for (int i = line.Length - groeße - 1; i < line.Length; i++)
-            {
-                line[i] = line[i].Substring(0, x) + letter + line[i].Substring(x + 3, line[i].Length - x - 3);
-            }
-            return true;
-        }
         static bool PostScreen()
         {
-            // set the new positions in the lines
-            for (int i = 0; i < line.Length; i++)
+            // write the numbers
+            for(int i = 0; i < spalten.Length; i++)
             {
-                SetChar(character, i * 3, spalten[i]);
-            }
-
-            // graphical Output
-            for (int i = 0; i < line.Length; i++)
-            {
-                Console.SetCursorPosition(2, 2 + i);
-                Console.Write(line[i]);
+                for (int k = 0; k < line.Length+1; k++)
+                {
+                    Console.SetCursorPosition(2 + 3 * i, 42 - k);
+                    if(k == 0)
+                    {
+                        if (spalten[i] < 10)
+                        {
+                            Console.Write("0" + Convert.ToString(spalten[i]) + " ");
+                        }
+                        else
+                        {
+                            Console.Write(Convert.ToString(spalten[i]) + " ");
+                        }
+                    }
+                    else if (k < spalten[i]+2)
+                    {
+                        Console.Write(character);
+                    }
+                    else
+                    {
+                        Console.Write(background);
+                    }
+                }
             }
             Console.SetCursorPosition(2, 42);
-            for (int k = 0; k < spalten.Length; k++)
+            // reset the graphical output
+            Console.SetCursorPosition(101, 45);
+            Console.Write("comparisons:        ");
+            Console.SetCursorPosition(101, 46);
+            Console.Write("      swaps:        ");
+            Console.SetCursorPosition(0, 45);
+            return true;
+        }
+        static bool ChangePosition(int zahl1, int zahl2)
+        {
+
+            for (int k = 0; k < line.Length+1; k++)
             {
-                if (spalten[k] < 10)
+                Console.SetCursorPosition(2 + 3 * zahl1, 42 - k);
+                if (k == 0)
                 {
-                    Console.Write("0" + Convert.ToString(spalten[k]) + " ");
+                    if (spalten[zahl1] < 10)
+                    {
+                        Console.Write("0" + Convert.ToString(spalten[zahl1]) + " ");
+                    }
+                    else
+                    {
+                        Console.Write(Convert.ToString(spalten[zahl1]) + " ");
+                    }
+                }
+                else if (k < spalten[zahl1] + 2)
+                {
+                    Console.Write(character);
                 }
                 else
                 {
-                    Console.Write(Convert.ToString(spalten[k]) + " ");
+                    Console.Write(background);
                 }
             }
-            // write the numbers
-
-            // reset the graphical output
-            for (int j = 0; j < line.Length; j++)
+            for(int k = 0; k < line.Length+1; k++)
             {
-                line[j] = text;
+                Console.SetCursorPosition(2 + 3 * zahl2, 42 - k);
+                if (k == 0)
+                {
+                    if (spalten[zahl2] < 10)
+                    {
+                        Console.Write("0" + Convert.ToString(spalten[zahl2]) + " ");
+                    }
+                    else
+                    {
+                        Console.Write(Convert.ToString(spalten[zahl2]) + " ");
+                    }
+                }
+                else if (k < spalten[zahl2] + 2)
+                {
+                    Console.Write(character);
+                }
+                else
+                {
+                    Console.Write(background);
+                }
             }
+            return true;
+        }
+        static bool ShowComparisons()
+        {
+            comparison = comparison + 1;
             Console.SetCursorPosition(101, 45);
             Console.Write("comparisons: " + comparison);
+            Console.SetCursorPosition(0, 45);
+            return true;
+        }
+        static bool ShowSwaps()
+        {
+            swap = swap + 1;
             Console.SetCursorPosition(101, 46);
             Console.Write("      swaps: " + swap);
             Console.SetCursorPosition(0, 45);
