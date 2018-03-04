@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Diagnostics;
 
 namespace GraphicSort
 {
@@ -17,6 +18,7 @@ namespace GraphicSort
         public static string text = "";
         public static int swap = 0;
         public static int comparison = 0;
+        public static Stopwatch stopWatch = new Stopwatch();
         static void Main(string[] args)
         {
             Console.SetWindowSize(124, 50);
@@ -115,6 +117,7 @@ namespace GraphicSort
                 Console.ResetColor();
                 Console.WriteLine("algorithm: " + algorithms[choose]);
                 PostScreen();
+                stopWatch.Start();
                 switch (choose)
                 {
                     case 0:
@@ -132,6 +135,8 @@ namespace GraphicSort
                     default:
                         break;
                 }
+                stopWatch.Stop();
+                stopWatch.Reset();
                 Console.ReadLine();
                 Console.SetCursorPosition(4, 45);
                 Console.WriteLine("                                     ");
@@ -163,6 +168,7 @@ namespace GraphicSort
                     }
                 }
             }
+            RunEndsound();
         }
         protected static void bubblesort()
         {
@@ -182,6 +188,7 @@ namespace GraphicSort
                     }
                 }
             }
+            RunEndsound();
         }
         protected static void insertionsort()
         {
@@ -223,6 +230,7 @@ namespace GraphicSort
                 Console.Beep(5000 + 50 * spalten[i], 20);
                 ChangePosition(min,i);
             }
+            RunEndsound();
         }
 
 
@@ -352,6 +360,8 @@ namespace GraphicSort
             Console.Write("comparisons:        ");
             Console.SetCursorPosition(101, 46);
             Console.Write("      swaps:        ");
+            Console.SetCursorPosition(101,47);
+            Console.Write("       time:        ");
             Console.SetCursorPosition(0, 45);
             return true;
         }
@@ -412,6 +422,11 @@ namespace GraphicSort
             Console.SetCursorPosition(101, 45);
             Console.Write("comparisons: " + comparison);
             Console.SetCursorPosition(0, 45);
+            TimeSpan ts = stopWatch.Elapsed;
+            Console.SetCursorPosition(101, 47);
+            Console.Write("       time: " + String.Format("{0:00}:{1:00}",
+        ts.Minutes, ts.Seconds));
+            Console.SetCursorPosition(0, 45);
             return true;
         }
         static bool ShowSwaps()
@@ -420,6 +435,32 @@ namespace GraphicSort
             Console.SetCursorPosition(101, 46);
             Console.Write("      swaps: " + swap);
             Console.SetCursorPosition(0, 45);
+            TimeSpan ts = stopWatch.Elapsed;
+            Console.SetCursorPosition(101, 47);
+            Console.Write("       time: " + String.Format("{0:00}:{1:00}",
+        ts.Minutes, ts.Seconds));
+            Console.SetCursorPosition(0, 45);
+            return true;
+        }
+        static void ShowTime()
+        {
+            /*while(stopWatch.IsRunning == true)
+            {
+                TimeSpan ts = stopWatch.Elapsed;
+                Console.SetCursorPosition(101, 47);
+                Console.Write("       time: "+ String.Format("{0:00}:{1:00}",
+            ts.Minutes, ts.Seconds));
+                Console.SetCursorPosition(0, 45);
+                Thread.Sleep(1000);
+            }*/
+        }
+
+        static bool RunEndsound()
+        {
+            for(int i = 0; i < spalten.Length; i++)
+            {
+                Console.Beep(5000 + 50 * spalten[i], 20);
+            }
             return true;
         }
     }
